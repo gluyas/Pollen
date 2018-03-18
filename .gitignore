@@ -1,3 +1,13 @@
+# Rider Files
+/.idea/
+
+# Churn
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+#### GITHUB FOR UNITY ####
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
