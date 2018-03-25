@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Representation of (discrete) hexagonal space
 /// </summary>
+[Serializable]
 public struct TileVector
 {
 	public readonly int W;
