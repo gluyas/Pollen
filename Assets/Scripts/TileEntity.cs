@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class TileEntity : MonoBehaviour
 {
 	[SerializeField]
@@ -23,6 +24,14 @@ public class TileEntity : MonoBehaviour
 		transform.localPosition = TilePos.ToVector3();
 	}
 
+#if UNITY_EDITOR
+	internal void Update()
+	{
+		TilePos = transform.localPosition.ToNearestTile();
+		SnapToWorldPos();
+	}
+#endif
+	
 	internal void OnValidate()
 	{
 		{
