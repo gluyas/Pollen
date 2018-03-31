@@ -3,21 +3,24 @@ using UnityEngine;
 
 public class TileEntity : MonoBehaviour
 {
-	[SerializeField]
-	internal Stage _stage;
-	public Stage Stage {
-		get { return _stage; }
-		set { _stage = value; }
+	[HideInInspector]
+	public Stage Stage;
+
+	[HideInInspector] 
+	public TileVector TilePos;
+
+	[HideInInspector]
+	public Stage.Tile Tile;
+	public bool IsTile
+	{
+		get { return Tile != null; }
 	}
 
-	[SerializeField]
-	[HideInInspector]
-	internal TileVector _tilePos;
-	public TileVector TilePos { 
-		get { return _tilePos; }
-		set { _tilePos = value; }
+	private void Start()
+	{
+		Tile = GetComponent<Stage.Tile>();
 	}
-	
+
 	public void SnapToWorldPos()
 	{
 		transform.localPosition = TilePos.ToVector3();
