@@ -5,6 +5,11 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Stage : MonoBehaviour
 {
+	/// <summary>
+	/// Get the gameplay state at a given tile position
+	/// Performs in O(n) time for the number of entities. Consider using ToDictionary.
+	/// </summary>
+	/// <param name="pos">Position to query</param>
 	public TileData this[TileVector pos]
 	{
 		get
@@ -24,6 +29,11 @@ public class Stage : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Copies the current Stage data into a Dictionary to improve querying speed.
+	/// Subsequent state changes will not be reflected in this object.
+	/// </summary>
+	/// <returns>A Dictionary representation of this Stage's current state</returns>
 	public Dictionary<TileVector, TileData> ToDictionary()
 	{
 		var map = new Dictionary<TileVector, TileData>();
@@ -63,6 +73,9 @@ public class Stage : MonoBehaviour
 	}
 #endif
 
+	/// <summary>
+	/// Used in conjunction with 
+	/// </summary>
 	[RequireComponent(typeof(TileEntity))]
 	public class Tile : MonoBehaviour
 	{
@@ -77,6 +90,9 @@ public class Stage : MonoBehaviour
 		}
 	}
 	
+	/// <summary>
+	/// Represents the game state at a single grid tile
+	/// </summary>
 	[Serializable]
 	public struct TileData
 	{
