@@ -10,7 +10,7 @@ public class TileEntity : MonoBehaviour
 	public TileVector TilePos;
 
 	[HideInInspector]
-	public Stage.Tile Tile;
+	public StageTile Tile;
 	public bool IsTile
 	{
 		get { return Tile != null; }
@@ -18,7 +18,7 @@ public class TileEntity : MonoBehaviour
 
 	private void Start()
 	{
-		Tile = GetComponent<Stage.Tile>();
+		Tile = GetComponent<StageTile>();
 	}
 
 	public void SnapToWorldPos()

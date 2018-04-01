@@ -92,29 +92,12 @@ public class Stage : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Used in conjunction with 
-	/// </summary>
-	[RequireComponent(typeof(TileEntity))]
-	public class Tile : MonoBehaviour
-	{
-		public TileEntity Entity;
-		
-		public bool BlockPlayer;
-		public bool BlockSpell;
-
-		private void Start()
-		{
-			Entity = GetComponent<TileEntity>();
-		}
-	}
-	
-	/// <summary>
 	/// Represents the game state at a single grid tile
 	/// </summary>
 	[Serializable]
 	public struct TileData
 	{
-		public Tile Tile;
+		public StageTile Tile;
 		public TileEntity Occupant;
 
 		public bool HasTile
