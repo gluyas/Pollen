@@ -55,8 +55,11 @@ internal class TileEntityEditor : Editor
 			var pos = EditorGUILayout.Vector2IntField(
 				"Tile Pos", new Vector2Int(tileEntity.TilePos.W, tileEntity.TilePos.E));
 	
-			tileEntity.TilePos = new TileVector(pos.x, pos.y);
-			tileEntity.SnapToWorldPos();
+			var newPos = new TileVector(pos.x, pos.y);
+			if (newPos != tileEntity.TilePos)
+			{
+				tileEntity.SnapToWorldPos();
+			}			
 		}
 
 		{	// reset pos button
