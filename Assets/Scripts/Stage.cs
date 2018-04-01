@@ -5,6 +5,19 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Stage : MonoBehaviour
 {
+	private TileEntity[] _entities;
+	public  TileEntity[] Entities
+	{
+		get
+		{
+			if (_entities == null)
+			{
+				_entities = GetComponentsInChildren<TileEntity>();
+			}
+			return _entities;
+		}
+	}
+	
 	/// <summary>
 	/// Get the gameplay state at a given tile position
 	/// Performs in O(n) time for the number of entities. Consider using ToDictionary.
@@ -15,7 +28,7 @@ public class Stage : MonoBehaviour
 		get
 		{
 			var data = new TileData();
-			foreach (var entity in GetComponentsInChildren<TileEntity>())
+			foreach (var entity in Entities)
 			{
 				if (entity.TilePos == pos)
 				{
@@ -37,7 +50,7 @@ public class Stage : MonoBehaviour
 	public Dictionary<TileVector, TileData> ToDictionary()
 	{
 		var map = new Dictionary<TileVector, TileData>();
-		foreach (var ent in GetComponentsInChildren<TileEntity>())
+		foreach (var ent in Entities)
 		{
 			var data = map.ContainsKey(ent.TilePos) ? map[ent.TilePos] : new TileData();
 			if (ent.IsTile)
@@ -54,9 +67,9 @@ public class Stage : MonoBehaviour
 	}
 	
 #if UNITY_EDITOR
-	internal void Update()
+	private void Update()
 	{
-		foreach (var ent in GetComponentsInChildren<TileEntity>())
+		foreach (var ent in Entities)
 		{
 			var newPos = ent.transform.localPosition.ToNearestTile();
 			if (newPos != ent.TilePos)
@@ -72,6 +85,11 @@ public class Stage : MonoBehaviour
 		}
 	}
 #endif
+
+	private void OnTransformChildrenChanged()
+	{
+		_entities = null;
+	}
 
 	/// <summary>
 	/// Used in conjunction with 
