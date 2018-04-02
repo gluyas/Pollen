@@ -9,7 +9,7 @@ public class StageTile : MonoBehaviour
 	public bool BlockPlayer;
 	public bool BlockSpell;
 
-	private void Start()
+	private void OnValidate()
 	{
 		Entity = GetComponent<TileEntity>();
 	}

@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entity: {fileID: 0}
   BlockPlayer: 0
-  BlockSpell: 0
+  BlockSpell: 1
 --- !u!114 &114654180941937564
 MonoBehaviour:
   m_ObjectHideFlags: 1

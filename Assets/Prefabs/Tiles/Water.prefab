@@ -109,5 +109,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Entity: {fileID: 0}
-  BlockPlayer: 0
-  BlockSpell: 0
+  BlockPlayer: 1
+  BlockSpell: 1

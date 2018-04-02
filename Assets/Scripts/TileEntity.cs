@@ -16,11 +16,6 @@ public class TileEntity : MonoBehaviour
 		get { return Tile != null; }
 	}
 
-	private void Start()
-	{
-		Tile = GetComponent<StageTile>();
-	}
-
 	public void SnapToWorldPos()
 	{
 		transform.localPosition = TilePos.ToVector3();
@@ -28,6 +23,8 @@ public class TileEntity : MonoBehaviour
 
 	internal void OnValidate()
 	{
+		Tile = GetComponent<StageTile>();
+		
 		{
 			var stage = GetComponentInParent<Stage>();
 			if (stage == null)

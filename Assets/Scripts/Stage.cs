@@ -76,6 +76,7 @@ public class Stage : MonoBehaviour
 			{
 
 				var data = this[newPos];
+				Debug.Log(data);
 				if (ent.IsTile && !data.HasTile || !ent.IsTile && !data.HasOccupant)
 				{
 					ent.TilePos = newPos;
