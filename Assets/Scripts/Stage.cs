@@ -5,6 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Stage : MonoBehaviour
 {
+	#region entity data model	
 	private TileEntity[] _entities;
 	public  TileEntity[] Entities
 	{
@@ -65,6 +66,23 @@ public class Stage : MonoBehaviour
 		}
 		return map;
 	}
+	#endregion
+
+	public void OnTileClick(StageTile tile)
+	{
+		// move the player to that tile, if possible
+		var player = GetComponentInChildren<Player>();
+		if (player == null || player.Entity.TilePos == tile.Entity.TilePos) return;
+
+		var space = this[tile.Entity.TilePos];
+		Debug.AssertFormat(space.Tile == tile, "Tile mismatch at {0}", tile.Entity.TilePos);
+
+		if (space.CanPlayerOccupy)
+		{
+			player.Entity.TilePos = tile.Entity.TilePos;
+			player.Entity.SnapToWorldPos();
+		}
+	}
 	
 #if UNITY_EDITOR
 	private void Update()
@@ -76,7 +94,6 @@ public class Stage : MonoBehaviour
 			{
 
 				var data = this[newPos];
-				Debug.Log(data);
 				if (ent.IsTile && !data.HasTile || !ent.IsTile && !data.HasOccupant)
 				{
 					ent.TilePos = newPos;
@@ -109,6 +126,11 @@ public class Stage : MonoBehaviour
 		public bool HasOccupant
 		{
 			get { return Occupant != null; }
+		}
+
+		public bool CanPlayerOccupy
+		{
+			get { return Occupant == null && Tile != null && !Tile.BlockPlayer; }
 		}
 	}
 }

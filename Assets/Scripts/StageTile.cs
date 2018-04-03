@@ -9,6 +9,11 @@ public class StageTile : MonoBehaviour
 	public bool BlockPlayer;
 	public bool BlockSpell;
 
+	private void OnMouseUpAsButton()
+	{
+		Entity.Stage.OnTileClick(this);
+	}
+
 	private void OnValidate()
 	{
 		Entity = GetComponent<TileEntity>();

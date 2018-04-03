@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23425217207604986}
   - component: {fileID: 114059209549730330}
   - component: {fileID: 114147207450446124}
+  - component: {fileID: 65156813918975310}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -84,6 +85,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1733442669557934}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65156813918975310
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1733442669557934}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &114059209549730330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stage: {fileID: 0}
-  Tile: {fileID: 0}
+  Tile: {fileID: 114147207450446124}
 --- !u!114 &114147207450446124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,6 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e94d392c844b0b94a4611d84d44298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Entity: {fileID: 0}
+  Entity: {fileID: 114059209549730330}
   BlockPlayer: 1
   BlockSpell: 1
