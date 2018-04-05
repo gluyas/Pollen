@@ -80,7 +80,7 @@ public class Stage : MonoBehaviour
 
 		if (space.CanPlayerOccupy)
 		{
-			StartCoroutine(player.Entity.MoveTo(tile.Entity.TilePos));
+			StartCoroutine(player.Entity.MoveTo(tile.TilePosTriplet));
 		}
 	}
 	
@@ -90,18 +90,42 @@ public class Stage : MonoBehaviour
 		if (EditorApplication.isPlaying) return;
 		foreach (var ent in Entities)
 		{
-			var newPos = ent.transform.localPosition.ToNearestTile();
+			var newTriplet = ent.transform.localPosition.ToNearestTileTriplet();
+			var newPos = newTriplet.Horizontal;
+			
+			// determine new horizontal positioning
+			TileData space;
 			if (newPos != ent.TilePos)
 			{
-
-				var data = this[newPos];
-				if (ent.IsTile && !data.HasTile || !ent.IsTile && !data.HasOccupant)
+				space = this[newPos];
+				if (ent.IsTile && !space.HasTile)
 				{
 					ent.TilePos = newPos;
-					EditorUtility.SetDirty(ent);	// important: forces serialization of the TileEntity
 				}
+				else if (!ent.IsTile && !space.HasOccupant)
+				{
+					ent.TilePos = newPos;
+				}
+				EditorUtility.SetDirty(ent);
 			}
-			ent.SnapToWorldPos();
+			else
+			{
+				space = this[ent.TilePos];
+			}
+			
+			// determine elevation and snap to position
+			int elevation;
+			if (ent.IsTile)
+			{
+				ent.Tile.Elevation = newTriplet.Vertical;
+				elevation = ent.Tile.Elevation;
+				EditorUtility.SetDirty(ent.Tile);
+			}
+			else
+			{
+				elevation = space.HasTile ? space.Tile.Elevation : 0;
+			}
+			ent.SnapToWorldPos(elevation);
 		}
 	}
 #endif

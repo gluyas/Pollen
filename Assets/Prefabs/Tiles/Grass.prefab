@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1637655014897780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6812668, y: -0.34517574, z: -4.2786684}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.13988578, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e94d392c844b0b94a4611d84d44298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Entity: {fileID: 114389603984003996}
+  Elevation: 0
   BlockPlayer: 0
   BlockSpell: 0
 --- !u!114 &114389603984003996
@@ -122,5 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226d06afd6e81594283a37527fb40e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stage: {fileID: 0}
-  Tile: {fileID: 114220294454941940}
+  TilePos:
+    W: 0
+    E: 0

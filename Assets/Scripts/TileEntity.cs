@@ -16,14 +16,14 @@ public class TileEntity : MonoBehaviour
 		get { return Tile != null; }
 	}
 
-	public void SnapToWorldPos()
+	public void SnapToWorldPos(int elevation = 0)
 	{
-		transform.localPosition = TilePos.ToVector3();
+		transform.localPosition = new TileVectorTriplet(TilePos, elevation).ToVector3();
 	}
 	
-	public IEnumerator MoveTo(TileVector target)
+	public IEnumerator MoveTo(TileVectorTriplet target)
 	{
-		TilePos = target;
+		TilePos = target.Horizontal;
 		
 		var from = transform.localPosition;
 		var to = target.ToVector3();

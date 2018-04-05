@@ -108,8 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226d06afd6e81594283a37527fb40e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stage: {fileID: 0}
-  Tile: {fileID: 114147207450446124}
+  TilePos:
+    W: 0
+    E: 0
 --- !u!114 &114147207450446124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,6 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e94d392c844b0b94a4611d84d44298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Entity: {fileID: 114059209549730330}
+  Elevation: 0
   BlockPlayer: 1
   BlockSpell: 1
