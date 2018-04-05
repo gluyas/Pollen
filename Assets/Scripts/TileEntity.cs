@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class TileEntity : MonoBehaviour
@@ -18,6 +19,24 @@ public class TileEntity : MonoBehaviour
 	public void SnapToWorldPos()
 	{
 		transform.localPosition = TilePos.ToVector3();
+	}
+	
+	public IEnumerator MoveTo(TileVector target)
+	{
+		TilePos = target;
+		
+		var from = transform.localPosition;
+		var to = target.ToVector3();
+		var startTime = Time.time;	
+		var time = 0.5f;
+		
+		float t;
+		do
+		{
+			t = (Time.time - startTime) / time;
+			transform.localPosition = Vector3.Lerp(from, to, t);
+			yield return new WaitForFixedUpdate();
+		} while (t < 1);
 	}
 
 	private void Start()

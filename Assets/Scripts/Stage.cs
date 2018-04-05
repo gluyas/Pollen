@@ -80,8 +80,7 @@ public class Stage : MonoBehaviour
 
 		if (space.CanPlayerOccupy)
 		{
-			player.Entity.TilePos = tile.Entity.TilePos;
-			player.Entity.SnapToWorldPos();
+			StartCoroutine(player.Entity.MoveTo(tile.Entity.TilePos));
 		}
 	}
 	
