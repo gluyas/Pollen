@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -87,6 +88,7 @@ public class Stage : MonoBehaviour
 #if UNITY_EDITOR
 	private void Update()
 	{
+		if (EditorApplication.isPlaying) return;
 		foreach (var ent in Entities)
 		{
 			var newPos = ent.transform.localPosition.ToNearestTile();
@@ -97,6 +99,7 @@ public class Stage : MonoBehaviour
 				if (ent.IsTile && !data.HasTile || !ent.IsTile && !data.HasOccupant)
 				{
 					ent.TilePos = newPos;
+					EditorUtility.SetDirty(ent);	// important: forces serialization of the TileEntity
 				}
 			}
 			ent.SnapToWorldPos();

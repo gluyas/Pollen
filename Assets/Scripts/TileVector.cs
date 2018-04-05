@@ -7,8 +7,8 @@ using System.Collections.Generic;
 [Serializable]
 public struct TileVector
 {
-	public readonly int W;
-	public readonly int E;
+	public int W;
+	public int E;
 
 	/// <summary>
 	/// Construct a new TileVector

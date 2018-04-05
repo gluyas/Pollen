@@ -1,15 +1,14 @@
-﻿using UnityEditor;
+﻿using System;
 using UnityEngine;
 
 public class TileEntity : MonoBehaviour
 {
-	[HideInInspector]
+	[NonSerialized]
 	public Stage Stage;
-
-	[HideInInspector] 
+	
 	public TileVector TilePos;
 
-	[HideInInspector]
+	[NonSerialized]
 	public StageTile Tile;
 	public bool IsTile
 	{
@@ -21,50 +20,18 @@ public class TileEntity : MonoBehaviour
 		transform.localPosition = TilePos.ToVector3();
 	}
 
-	internal void OnValidate()
+	private void Start()
 	{
 		Tile = GetComponent<StageTile>();
-		
-		{
-			var stage = GetComponentInParent<Stage>();
-			if (stage == null)
-			{
-				Debug.LogWarning("TileEntity must be direct child of a Stage");
-				Stage = null;
-			}
-			else
-			{
-				Stage = stage;
-			}
-		}
+		Stage = GetComponentInParent<Stage>();
 	}
-}
 
-[CustomEditor(typeof(TileEntity))]
-internal class TileEntityEditor : Editor
-{
-	public override void OnInspectorGUI()
+	private void OnValidate()
 	{
-		base.OnInspectorGUI();
-		var tileEntity = (TileEntity) target;
-
-		{	// TilePos editor
-			var pos = EditorGUILayout.Vector2IntField(
-				"Tile Pos", new Vector2Int(tileEntity.TilePos.W, tileEntity.TilePos.E));
-	
-			var newPos = new TileVector(pos.x, pos.y);
-			if (newPos != tileEntity.TilePos)
-			{
-				tileEntity.SnapToWorldPos();
-			}			
-		}
-
-		{	// reset pos button
-			if (GUILayout.Button("Refresh"))
-			{
-				tileEntity.SnapToWorldPos();
-				tileEntity.OnValidate();
-			}
+		Start();
+		if (Stage == null && this.isActiveAndEnabled)
+		{
+			Debug.LogWarningFormat("{0} is not child of a Stage", this);
 		}
 	}
 }

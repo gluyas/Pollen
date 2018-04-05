@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(TileEntity))]
 public class StageTile : MonoBehaviour
 {
-	[HideInInspector]
+	[NonSerialized]
 	public TileEntity Entity;
-		
+
 	public bool BlockPlayer;
 	public bool BlockSpell;
 
@@ -14,8 +15,13 @@ public class StageTile : MonoBehaviour
 		Entity.Stage.OnTileClick(this);
 	}
 
-	private void OnValidate()
+	private void Start()
 	{
 		Entity = GetComponent<TileEntity>();
+	}
+
+	private void OnValidate()
+	{
+		Start();
 	}
 }
