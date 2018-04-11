@@ -9,13 +9,6 @@ public class TileEntity : MonoBehaviour
 	
 	public TileVector TilePos;
 
-	[NonSerialized]
-	public StageTile Tile;
-	public bool IsTile
-	{
-		get { return Tile != null; }
-	}
-
 	public void SnapToWorldPos(int elevation = 0)
 	{
 		transform.localPosition = new TileVectorTriplet(TilePos, elevation).ToVector3();
@@ -41,7 +34,6 @@ public class TileEntity : MonoBehaviour
 
 	private void Start()
 	{
-		Tile = GetComponent<StageTile>();
 		Stage = GetComponentInParent<Stage>();
 	}
 

@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4445041955448558}
   - component: {fileID: 33979628160394142}
   - component: {fileID: 23146720183352588}
-  - component: {fileID: 114389603984003996}
   - component: {fileID: 114220294454941940}
   - component: {fileID: 65198449796704650}
   m_Layer: 0
@@ -108,20 +107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e94d392c844b0b94a4611d84d44298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Elevation: 0
-  BlockPlayer: 0
-  BlockSpell: 0
---- !u!114 &114389603984003996
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1637655014897780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 226d06afd6e81594283a37527fb40e48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   TilePos:
     W: 0
     E: 0
+  Elevation: 0
+  BlockPlayer: 0
+  BlockSpell: 0

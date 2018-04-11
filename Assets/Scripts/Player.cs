@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(TileEntity))]
-public class Player : MonoBehaviour
+public class Player : TileEntity
 {
-	public TileEntity Entity;
 	
-	private void OnValidate()
-	{
-		Entity = GetComponent<TileEntity>();
-	}
 }

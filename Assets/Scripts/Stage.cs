@@ -37,8 +37,8 @@ public class Stage : MonoBehaviour
 			{
 				if (entity.TilePos == pos)
 				{
-					if (entity.IsTile) data.Tile     = entity.Tile;
-					else               data.Occupant = entity;
+					if (entity is StageTile) data.Tile     = entity as StageTile;
+					else                     data.Occupant = entity;
 					
 					if (data.Occupant != null && data.Tile != null) break;
 				}
@@ -58,9 +58,9 @@ public class Stage : MonoBehaviour
 		foreach (var ent in Entities)
 		{
 			var data = map.ContainsKey(ent.TilePos) ? map[ent.TilePos] : new TileData();
-			if (ent.IsTile)
+			if (ent is StageTile)
 			{
-				if (data.Tile == null) data.Tile = ent.Tile;
+				if (data.Tile == null) data.Tile = ent as StageTile;
 			}
 			else
 			{
@@ -76,14 +76,14 @@ public class Stage : MonoBehaviour
 	{
 		// move the player to that tile, if possible
 		var player = GetComponentInChildren<Player>();
-		if (player == null || player.Entity.TilePos == tile.Entity.TilePos) return;
+		if (player == null || player.TilePos == tile.TilePos) return;
 
-		var space = this[tile.Entity.TilePos];
-		Debug.AssertFormat(space.Tile == tile, "Tile mismatch at {0}", tile.Entity.TilePos);
+		var space = this[tile.TilePos];
+		Debug.AssertFormat(space.Tile == tile, "Tile mismatch at {0}", tile.TilePos);
 
 		if (space.CanPlayerOccupy)
 		{
-			StartCoroutine(player.Entity.MoveTo(tile.TilePosTriplet));
+			StartCoroutine(player.MoveTo(tile.TilePosTriplet));
 		}
 	}
 	
@@ -101,11 +101,11 @@ public class Stage : MonoBehaviour
 			if (newPos != ent.TilePos)
 			{
 				space = this[newPos];
-				if (ent.IsTile && !space.HasTile)
+				if (ent is StageTile && !space.HasTile)
 				{
 					ent.TilePos = newPos;
 				}
-				else if (!ent.IsTile && !space.HasOccupant)
+				else if (!(ent is StageTile) && !space.HasOccupant)
 				{
 					ent.TilePos = newPos;
 				}
@@ -118,11 +118,13 @@ public class Stage : MonoBehaviour
 			
 			// determine elevation and snap to position
 			int elevation;
-			if (ent.IsTile)
+			if (ent is StageTile)
 			{
-				ent.Tile.Elevation = newTriplet.Vertical;
-				elevation = ent.Tile.Elevation;
-				EditorUtility.SetDirty(ent.Tile);
+				var tile = ent as StageTile;
+				tile.Elevation = newTriplet.Vertical;
+				elevation = tile.Elevation;
+				
+				EditorUtility.SetDirty(tile);
 			}
 			else
 			{

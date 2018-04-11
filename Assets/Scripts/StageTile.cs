@@ -1,17 +1,13 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(TileEntity))]
-public class StageTile : MonoBehaviour
+public class StageTile : TileEntity
 {
-	[NonSerialized]
-	public TileEntity Entity;
-
 	public int Elevation;
 
 	public TileVectorTriplet TilePosTriplet
 	{
-		get { return new TileVectorTriplet(Entity.TilePos, Elevation);}
+		get { return new TileVectorTriplet(TilePos, Elevation);}
 	}
 	
 	public bool BlockPlayer;
@@ -19,17 +15,11 @@ public class StageTile : MonoBehaviour
 
 	private void OnMouseUpAsButton()
 	{
-		Entity.Stage.OnTileClick(this);
-	}
-
-	private void Start()
-	{
-		Entity = GetComponent<TileEntity>();
+		Stage.OnTileClick(this);
 	}
 
 	private void OnValidate()
 	{
-		Start();
-		Entity.SnapToWorldPos(Elevation);
+		SnapToWorldPos(Elevation);
 	}
 }
