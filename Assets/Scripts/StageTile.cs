@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class StageTile : TileEntity
 {
+	public Plantable Plantable;
+	
 	public int Elevation;
 
 	public TileVectorTriplet TilePosTriplet

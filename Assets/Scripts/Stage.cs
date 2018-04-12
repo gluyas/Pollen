@@ -15,11 +15,15 @@ public class Stage : MonoBehaviour
 	{
 		get
 		{
+#if UNITY_EDITOR
+			return GetComponentsInChildren<TileEntity>();
+#else
 			if (_entities == null)
 			{
 				_entities = GetComponentsInChildren<TileEntity>();
 			}
 			return _entities;
+#endif
 		}
 	}
 	
@@ -37,10 +41,11 @@ public class Stage : MonoBehaviour
 			{
 				if (entity.TilePos == pos)
 				{
-					if (entity is StageTile) data.Tile     = entity as StageTile;
-					else                     data.Occupant = entity;
+					if (entity is StageTile)      data.Tile      = entity as StageTile;
+					else if (entity is Plantable) data.Plantable = entity as Plantable;
+					else                          data.Occupant  = entity;
 					
-					if (data.Occupant != null && data.Tile != null) break;
+					if (data.Occupant != null && data.Tile != null && data.Plantable != null) break;
 				}
 			}
 			return data;
@@ -61,6 +66,10 @@ public class Stage : MonoBehaviour
 			if (ent is StageTile)
 			{
 				if (data.Tile == null) data.Tile = ent as StageTile;
+			}
+			else if (ent is Plantable)
+			{
+				if (data.Plantable == null) data.Plantable = ent as Plantable;
 			}
 			else
 			{
@@ -101,13 +110,17 @@ public class Stage : MonoBehaviour
 			if (newPos != ent.TilePos)
 			{
 				space = this[newPos];
-				if (ent is StageTile && !space.HasTile)
+				if (ent is StageTile)
 				{
-					ent.TilePos = newPos;
+					if (!space.HasTile) ent.TilePos = newPos;
 				}
-				else if (!(ent is StageTile) && !space.HasOccupant)
+				else if (ent is Plantable)
 				{
-					ent.TilePos = newPos;
+					if (!space.HasPlantable) ent.TilePos = newPos;
+				}
+				else 
+				{
+					if (!space.HasOccupant) ent.TilePos = newPos;
 				}
 				EditorUtility.SetDirty(ent);
 			}
@@ -148,7 +161,8 @@ public class Stage : MonoBehaviour
 	{
 		public StageTile Tile;
 		public TileEntity Occupant;
-
+		public Plantable Plantable;
+		
 		public bool HasTile
 		{
 			get { return Tile != null; }
@@ -157,6 +171,11 @@ public class Stage : MonoBehaviour
 		public bool HasOccupant
 		{
 			get { return Occupant != null; }
+		}
+
+		public bool HasPlantable
+		{
+			get { return Plantable != null; }
 		}
 
 		public bool CanPlayerOccupy
