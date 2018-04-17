@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Plantable : TileEntity
 {
-	public Plant Plant;
+	
 }
