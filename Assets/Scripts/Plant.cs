@@ -1,7 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -15,6 +16,9 @@ public class Plant : TileEntity
 
 	[HideInInspector]
 	public bool PlacedByPlayer = false;
+
+	[NonSerialized]
+	public int Hits = 0;
 
 #if UNITY_EDITOR
 	private void OnValidate()
@@ -35,4 +39,5 @@ public class Plant : TileEntity
 public enum PlantType
 {
 	Normal,
+	Twist,
 }
