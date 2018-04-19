@@ -81,7 +81,7 @@ public class Spell
 				var plant = space.Occupant as Plant;
 				if (plant != null)
 				{
-					spell.Plant = plant;			// add plant to record
+					spell.Plant = plant;			// add plant to record, for convinience
 					
 					switch (plant.Type)				// trigger plant side effects
 					{

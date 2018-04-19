@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class Stage : MonoBehaviour
 {
+	public Material SpellMaterial;
+	
 	#region entity data model	
 	private TileEntity[] _entities;
 	public  TileEntity[] Entities
@@ -87,12 +90,46 @@ public class Stage : MonoBehaviour
 		var player = GetComponentInChildren<Player>();
 		if (player == null || player.TilePos == tile.TilePos) return;
 
-		var space = this[tile.TilePos];
-		Debug.AssertFormat(space.Tile == tile, "Tile mismatch at {0}", tile.TilePos);
-
-		if (space.CanPlayerOccupy)
+		if (Input.GetKey(KeyCode.LeftShift))
 		{
-			StartCoroutine(player.MoveTo(tile.TilePosTriplet));
+			var spellDir = player.TilePos.GetApproximateDirectionTo(tile.TilePos);
+			if (spellDir.HasValue)
+			{
+				var spell = Spell.Invoke(this, player.TilePos, spellDir.Value);
+				StartCoroutine(AnimateSpellRoutine(spell));
+			}
+		}
+		else
+		{			
+			var space = this[tile.TilePos];
+			Debug.AssertFormat(space.Tile == tile, "Tile mismatch at {0}", tile.TilePos);
+
+			if (space.CanPlayerOccupy)
+			{
+				StartCoroutine(player.MoveTo(tile.TilePosTriplet));
+			}
+		}
+	}
+
+	private IEnumerator AnimateSpellRoutine(List<Spell> invocation)
+	{
+		foreach (var spell in invocation)
+		{
+			var space = this[spell.Pos];
+			if (space.HasTile)
+			{
+				var tileRenderer = space.Tile.gameObject.GetComponent<Renderer>();
+				var tileMat = tileRenderer.material;
+				
+				tileRenderer.material = SpellMaterial;
+				
+				yield return new WaitForSeconds(0.1f);
+				tileRenderer.material = tileMat;
+			}
+			else
+			{
+				yield return new WaitForSeconds(0.1f);
+			}
 		}
 	}
 	
